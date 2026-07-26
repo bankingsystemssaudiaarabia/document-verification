@@ -1,14 +1,8 @@
-// Temporary test database
-// Later we will replace this with Supabase
-
-const documents = {
-    "ABC123": "documents/sample-document.pdf",
-    "TEST001": "documents/test-document.pdf",
-    "DOC2026": "documents/document-2026.pdf"
-};
+const SUPABASE_URL = "https://ohnevdjaksrnwpituybz.supabase.co/rest/v1/";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9obmV2ZGpha3NybndwaXR1eWJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwNjg0MDQsImV4cCI6MjEwMDY0NDQwNH0.p1QiWkDtMLyp_DiIUuNgyUX1LLftsFeudzzye4qdiuY";
 
 
-function verifyDocument() {
+async function verifyDocument() {
 
     const input = document.getElementById("verificationNumber");
 
@@ -17,7 +11,7 @@ function verifyDocument() {
     const verificationNumber = input.value.trim().toUpperCase();
 
 
-    // Check if user entered something
+    // Check if the user entered a number
 
     if (verificationNumber === "") {
 
@@ -31,32 +25,84 @@ function verifyDocument() {
     }
 
 
-    // Search for verification number
+    // Show loading message
 
-    if (documents[verificationNumber]) {
+    result.innerHTML = `
+        <p>
+            Checking verification number...
+        </p>
+    `;
 
-        const pdfURL = documents[verificationNumber];
+
+    try {
+
+        const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/documents?verification_number=eq.${encodeURIComponent(verificationNumber)}&select=pdf_url`,
+            {
+                method: "GET",
+
+                headers: {
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+                }
+            }
+        );
 
 
-        result.innerHTML = `
-            <p class="success">
-                Verification successful ✓
-            </p>
+        if (!response.ok) {
 
-            <a
-                href="${pdfURL}"
-                target="_blank"
-                class="view-pdf"
-            >
-                VIEW PDF
-            </a>
-        `;
+            throw new Error("Database request failed");
 
-    } else {
+        }
+
+
+        const data = await response.json();
+
+
+        // Verification number found
+
+        if (data.length > 0) {
+
+            const pdfURL = data[0].pdf_url;
+
+
+            result.innerHTML = `
+                <p class="success">
+                    Verification successful ✓
+                </p>
+
+                <a
+                    href="${pdfURL}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="view-pdf"
+                >
+                    VIEW PDF
+                </a>
+            `;
+
+
+        } else {
+
+            // Verification number not found
+
+            result.innerHTML = `
+                <p class="error">
+                    Invalid verification number.
+                </p>
+            `;
+
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
 
         result.innerHTML = `
             <p class="error">
-                Invalid verification number.
+                An error occurred while checking the verification number.
+                Please try again.
             </p>
         `;
 
