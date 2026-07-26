@@ -1,5 +1,5 @@
-const SUPABASE_URL = "https://ohnevdjaksrnwpituybz.supabase.co/rest/v1/";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9obmV2ZGpha3NybndwaXR1eWJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwNjg0MDQsImV4cCI6MjEwMDY0NDQwNH0.p1QiWkDtMLyp_DiIUuNgyUX1LLftsFeudzzye4qdiuY";
+const SUPABASE_URL = "https://ohnevdjaksrnwpituybz.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_mAXo7QqN1ZYQVgbGX7UQvw_VGbdr0I6";
 
 
 async function verifyDocument() {
