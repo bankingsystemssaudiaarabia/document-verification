@@ -1,35 +1,69 @@
-document.addEventListener("DOMContentLoaded", () => {
+const supabaseUrl = "https://ohnevdjaksrnwpituybz.supabase.co";
+const supabaseKey = "sb_publishable_mAXo7QqN1ZYQVgbGX7UQvw_VGbdr0I6";
 
-    const button = document.querySelector("button");
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    button.addEventListener("click", (e) => {
-        e.preventDefault();
+const form = document.querySelector("form");
+const result = document.getElementById("result");
 
-        const inputs = document.querySelectorAll("input");
+form.addEventListener("submit", async (e) => {
 
-        let valid = true;
+    e.preventDefault();
 
-        inputs.forEach(input => {
-            if (input.value.trim() === "") {
-                input.style.border = "2px solid #ff4d4f";
-                valid = false;
-            } else {
-                input.style.border = "2px solid #1d4dff";
-            }
-        });
+    result.innerHTML = "";
 
-        if (!valid) {
-            alert("يرجى تعبئة جميع الحقول");
-            return;
-        }
+    const idNumber = document.querySelectorAll("input")[0].value.trim();
+    const serialNumber = document.querySelectorAll("input")[1].value.trim();
 
-        button.innerHTML = "جاري التحقق...";
-        button.disabled = true;
+    if (!idNumber || !serialNumber) {
+        result.innerHTML =
+            "<p style='color:red;font-weight:bold;'>يرجى تعبئة جميع الحقول.</p>";
+        return;
+    }
 
-        setTimeout(() => {
-            button.innerHTML = "تم التحقق";
-            button.disabled = false;
-        }, 2000);
+    const button = document.querySelector('button[type="submit"]');
+
+    button.disabled = true;
+    button.textContent = "جاري التحقق...";
+
+    const { data, error } = await supabase
+        .from("documents")
+        .select("pdf_url")
+        .eq("id_number", idNumber)
+        .eq("serial_number", serialNumber)
+        .single();
+
+    button.disabled = false;
+    button.textContent = "انقر هنا لتحميل الملف";
+
+    if (error || !data) {
+        result.innerHTML =
+            "<p style='color:red;font-size:18px;font-weight:bold;'>❌ لم يتم العثور على المستند.</p>";
+        return;
+    }
+
+    result.innerHTML = `
+        <p style="color:green;font-size:20px;font-weight:bold;margin-bottom:20px;">
+            ✅ تم التحقق من المستند بنجاح
+        </p>
+
+        <button id="viewPdf"
+            style="
+                background:#0052ff;
+                color:white;
+                border:none;
+                padding:14px 35px;
+                border-radius:14px;
+                cursor:pointer;
+                font-size:18px;
+                font-family:Cairo;
+            ">
+            عرض PDF
+        </button>
+    `;
+
+    document.getElementById("viewPdf").addEventListener("click", () => {
+        window.open(data.pdf_url, "_blank");
     });
 
 });
