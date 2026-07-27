@@ -1,8 +1,10 @@
-alert("Script loaded");
 const supabaseUrl = "https://ohnevdjaksrnwpituybz.supabase.co";
 const supabaseKey = "sb_publishable_mAXo7QqN1ZYQVgbGX7UQvw_VGbdr0I6";
 
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseClient = window.supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+);
 
 const form = document.querySelector("form");
 const result = document.getElementById("result");
@@ -27,7 +29,7 @@ form.addEventListener("submit", async (e) => {
     button.disabled = true;
     button.textContent = "جاري التحقق...";
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from("documents")
         .select("pdf_url")
         .eq("id_number", idNumber)
