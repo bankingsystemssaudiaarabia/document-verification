@@ -1,134 +1,35 @@
-const SUPABASE_URL = "https://ohnevdjaksrnwpituybz.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_mAXo7QqN1ZYQVgbGX7UQvw_VGbdr0I6";
+document.addEventListener("DOMContentLoaded", () => {
 
+    const button = document.querySelector("button");
 
-async function verifyDocument() {
+    button.addEventListener("click", (e) => {
+        e.preventDefault();
 
-    const input =
-        document.getElementById("verificationNumber");
+        const inputs = document.querySelectorAll("input");
 
-    const result =
-        document.getElementById("result");
+        let valid = true;
 
-    const verificationNumber =
-        input.value.trim().toUpperCase();
+        inputs.forEach(input => {
+            if (input.value.trim() === "") {
+                input.style.border = "2px solid #ff4d4f";
+                valid = false;
+            } else {
+                input.style.border = "2px solid #1d4dff";
+            }
+        });
 
-
-    // Check if empty
-
-    if (verificationNumber === "") {
-
-        result.innerHTML = `
-            <p class="error">
-                Please enter a verification number.
-            </p>
-        `;
-
-        return;
-    }
-
-
-    // Show loading message
-
-    result.innerHTML = `
-        <p>
-            Checking verification number...
-        </p>
-    `;
-
-
-    try {
-
-        const url =
-            `${SUPABASE_URL}/rest/v1/documents?verification_number=eq.${encodeURIComponent(verificationNumber)}&select=pdf_url`;
-
-
-        const response =
-            await fetch(
-                url,
-                {
-                    method: "GET",
-
-                    headers: {
-                        "apikey":
-                            SUPABASE_ANON_KEY,
-
-                        "Authorization":
-                            `Bearer ${SUPABASE_ANON_KEY}`
-                    }
-                }
-            );
-
-
-        if (!response.ok) {
-
-            const errorText =
-                await response.text();
-
-            throw new Error(
-                `HTTP ${response.status}: ${errorText}`
-            );
-
+        if (!valid) {
+            alert("يرجى تعبئة جميع الحقول");
+            return;
         }
 
+        button.innerHTML = "جاري التحقق...";
+        button.disabled = true;
 
-        const data =
-            await response.json();
+        setTimeout(() => {
+            button.innerHTML = "تم التحقق";
+            button.disabled = false;
+        }, 2000);
+    });
 
-
-        // Document found
-
-        if (data.length > 0) {
-
-            const pdfURL =
-                data[0].pdf_url;
-
-
-            result.innerHTML = `
-                <p class="success">
-                    Verification successful ✓
-                </p>
-
-                <a
-                    href="${pdfURL}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="view-pdf"
-                >
-                    VIEW PDF
-                </a>
-            `;
-
-
-        } else {
-
-            // Document not found
-
-            result.innerHTML = `
-                <p class="error">
-                    Invalid verification number.
-                </p>
-            `;
-
-        }
-
-
-    } catch (error) {
-
-        console.error(
-            "Verification error:",
-            error
-        );
-
-
-        result.innerHTML = `
-            <p class="error">
-                An error occurred while checking
-                the verification number.
-                Please try again.
-            </p>
-        `;
-
-    }
-
-}
+});

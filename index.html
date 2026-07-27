@@ -1,44 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Document Verification</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://kit.fontawesome.com/6c1f7b3e8f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-    <div class="verification-container">
+<header class="header">
 
-        <div class="verification-box">
+    <div class="announcement">
+        قواعد الإفصاح عن أسعار المنتجات التمويلية للأفراد
+    </div>
 
-            <h1>Document Verification</h1>
+    <div class="navbar">
 
-            <p class="description">
-                Please enter your verification number
-            </p>
+        <div class="nav-right">
+            <button class="menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
 
-            <input
-                type="text"
-                id="verificationNumber"
-                placeholder="Enter verification number"
-                autocomplete="off"
-            >
+        <div class="nav-center">
+            <img src="images/logo.png" alt="Logo">
+        </div>
 
-            <button onclick="verifyDocument()">
-                VERIFY
+        <div class="nav-left">
+
+            <button>
+                <i class="fa-regular fa-user"></i>
             </button>
 
-            <div id="result"></div>
+            <button>
+                🌐
+            </button>
+
+            <button>
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
 
         </div>
 
     </div>
 
-    <script src="script.js"></script>
+</header>
+
+<section class="verification-card">
+
+    <form>
+
+        <div class="input-group">
+
+            <label>
+                رقم الهوية الوطنية أو الإقامة أو رقم المنشأة
+            </label>
+
+            <input
+                type="text"
+                placeholder="يرجى إدخال رقم الهوية الوطنية أو الإقامة أو رقم المنشأة">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>
+                الرقم التسلسلي
+            </label>
+
+            <input
+                type="text"
+                placeholder="يرجى إدخال الرقم التسلسلي">
+
+        </div>
+
+        <button type="submit">
+            انقر هنا لتحميل الملف
+        </button>
+
+    </form>
+
+</section>
+
+<script src="script.js"></script>
 
 </body>
+
 </html>

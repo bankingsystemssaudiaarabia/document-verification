@@ -1,117 +1,282 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f6f8;
-    min-height: 100vh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
+html{
+    scroll-behavior:smooth;
 }
 
-.verification-container {
-    width: 100%;
-    max-width: 500px;
+body{
+    font-family:'Cairo',sans-serif;
+    background:#f5f7fb;
+    color:#1c2852;
+    direction:rtl;
 }
 
-.verification-box {
-    background: white;
-    padding: 40px;
-    border-radius: 12px;
+/* ===========================
+   HEADER
+=========================== */
 
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-
-    text-align: center;
+.header{
+    background:#ffffff;
+    box-shadow:0 2px 15px rgba(0,0,0,.05);
+    position:sticky;
+    top:0;
+    z-index:999;
 }
 
-h1 {
-    font-size: 28px;
-    margin-bottom: 15px;
-    color: #222;
+.announcement{
+    text-align:center;
+    padding:16px;
+    font-size:15px;
+    font-weight:600;
+    border-bottom:1px solid #ececec;
 }
 
-.description {
-    color: #666;
-    margin-bottom: 25px;
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:85px;
+    padding:0 30px;
 }
 
-input {
-    width: 100%;
-    padding: 15px;
-
-    border: 1px solid #ccc;
-    border-radius: 6px;
-
-    font-size: 16px;
-
-    margin-bottom: 15px;
-
-    outline: none;
+.nav-left,
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
 }
 
-input:focus {
-    border-color: #333;
+.nav-left button,
+.menu-btn{
+
+    width:46px;
+    height:46px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#f2f5fb;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-size:18px;
 }
 
-button {
-    width: 100%;
+.nav-left button:hover,
+.menu-btn:hover{
 
-    padding: 15px;
-
-    background: #222;
-    color: white;
-
-    border: none;
-    border-radius: 6px;
-
-    font-size: 16px;
-    font-weight: bold;
-
-    cursor: pointer;
+    background:#0052ff;
+    color:white;
 }
 
-button:hover {
-    background: #444;
+.nav-center img{
+
+    height:54px;
+
 }
 
-#result {
-    margin-top: 20px;
+/* ===========================
+   FORM CARD
+=========================== */
+
+.verification-card{
+
+    width:90%;
+    max-width:760px;
+
+    margin:90px auto;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:60px;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.08);
+
+    animation:fadeUp .7s ease;
 }
 
-.success {
-    color: #16803c;
-    font-weight: bold;
+.input-group{
+
+    margin-bottom:35px;
+
 }
 
-.error {
-    color: #c62828;
-    font-weight: bold;
+label{
+
+    display:block;
+
+    margin-bottom:12px;
+
+    font-size:21px;
+
+    font-weight:600;
+
 }
 
-.view-pdf {
-    display: inline-block;
+input{
 
-    margin-top: 15px;
+    width:100%;
 
-    padding: 12px 25px;
+    height:64px;
 
-    background: #16803c;
-    color: white;
+    border:none;
 
-    text-decoration: none;
+    outline:none;
 
-    border-radius: 6px;
+    border-radius:16px;
 
-    font-weight: bold;
+    background:#f4f6fc;
+
+    padding:0 22px;
+
+    font-size:18px;
+
+    font-family:'Cairo',sans-serif;
+
+    transition:.3s;
+
 }
 
-.view-pdf:hover {
-    background: #11662f;
+input:focus{
+
+    background:white;
+
+    box-shadow:0 0 0 2px #0052ff;
+
+}
+
+button[type="submit"]{
+
+    width:100%;
+
+    height:62px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:linear-gradient(90deg,#0047ff,#1b6bff);
+
+    color:white;
+
+    font-size:21px;
+
+    font-weight:700;
+
+    font-family:'Cairo',sans-serif;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+button[type="submit"]:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 15px 35px rgba(0,82,255,.35);
+
+}
+
+/* ===========================
+   ANIMATION
+=========================== */
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(35px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.navbar{
+
+padding:0 18px;
+
+height:75px;
+
+}
+
+.nav-center img{
+
+height:45px;
+
+}
+
+.nav-left button,
+.menu-btn{
+
+width:42px;
+
+height:42px;
+
+}
+
+.verification-card{
+
+padding:35px 22px;
+
+margin:45px auto;
+
+border-radius:22px;
+
+}
+
+label{
+
+font-size:18px;
+
+}
+
+input{
+
+height:56px;
+
+font-size:16px;
+
+}
+
+button[type="submit"]{
+
+height:56px;
+
+font-size:18px;
+
+}
+
 }
