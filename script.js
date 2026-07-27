@@ -1,3 +1,4 @@
+alert("Script loaded");
 const supabaseUrl = "https://ohnevdjaksrnwpituybz.supabase.co";
 const supabaseKey = "sb_publishable_mAXo7QqN1ZYQVgbGX7UQvw_VGbdr0I6";
 
